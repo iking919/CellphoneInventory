@@ -9,17 +9,19 @@ import java.util.Scanner;
 */
 public class Main {
     
-    // Main method handles the user's inputs and the corresponding outputs, calling helper functions as needed.
+    // Main method starts the application, passing the specified inventory dataFilePath to the run method to begin the inventory search.
+    public static void main(String[] args) {
+        run("data/cellphonedata.txt");
+    }
+
+    // Run method handles the user's inputs and the corresponding outputs, calling helper functions as needed.
     // User inputs commands. Commands include:
     //  - Filters they would like to apply
     //  - "clear" if they would like to clear all current filters
     //  - "confirm" if they would like to confirm filters and retrieve filtered phones
     //  - "exit" if they would like to exit the program
-    public static void main(String[] args) {
+    static void run(String dataFilePath) {
         List<Phone> totalPhones;
-
-        // Define the specified dataFilePath.
-        String dataFilePath = "data/cellphonedata.txt";
 
         // Call the InventoryParser parseInventory method to parse the phone inventory.
         // If any errors occur during reading or loading the inventory file, output the corresponding error and end execution.
@@ -131,6 +133,13 @@ public class Main {
                         
                         // Read in user's decision to replace filter criteria.
                         System.out.print("\nInput: ");
+
+                        // If scanner has no next line, close scanner and application.
+                        if(!scanner.hasNextLine()){
+                            System.out.println("Application terminated.");
+                            scanner.close();
+                            return;
+                        }
                         String response = scanner.nextLine().strip();
 
                         // If user inputs "Y" replace existing filter with new filter input, updating boolean values to avoid adding filter twice.
