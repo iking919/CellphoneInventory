@@ -30,6 +30,12 @@ public class InventoryService {
     // validFilter method takes in a filter string and returns a boolean if it uses a valid field, and is in valid format "field => value(s)".
     static boolean validFilter(String filter) {
 
+        // If filter is null it is invalid. Output corresponding message and return false.
+        if (filter == null) {
+            System.out.println("\nInvalid filter format. Filter must be in the format 'field => value'.");
+            return false;
+        }
+
         // If filter doesn't contain "=>" it is invalid. Output corresponding message and return false.
         if(!filter.contains("=>")) {
             System.out.println("\nInvalid filter format. Filter must be in the format 'field => value'.");
@@ -191,7 +197,7 @@ public class InventoryService {
                     double amount = Double.parseDouble(price.replace("<", "").replace("$", ""));
                     
                     // Make comparison, if filter criteria isn't met update boolean value accordingly.
-                    if(phone.getPrice() > amount) {
+                    if(phone.getPrice() >= amount) {
                         validPrice = false;
                     }
             
@@ -202,7 +208,7 @@ public class InventoryService {
                     double amount = Double.parseDouble(price.replace(">", "").replace("$", ""));
                     
                     // Make comparison, if filter criteria isn't met update boolean value accordingly.
-                    if(phone.getPrice() < amount) {
+                    if(phone.getPrice() <= amount) {
                         validPrice = false;;
                     }
 
@@ -275,7 +281,7 @@ public class InventoryService {
         return false;
     }
 
-    // isValidPrice method takes a storage filter string and returns a boolean if it is in valid format (i.e., "= 1TB", "< 512GB", or simply "256GB").
+    // isValidStorage method takes a storage filter string and returns a boolean if it is in valid format (i.e., "= 1TB", "< 512GB", or simply "256GB").
     private static boolean isValidStorage(String storage) {
 
         // Use the following regex to split filter storage along ">", "<", "=", and when the string switches from integers to constants.
@@ -303,7 +309,7 @@ public class InventoryService {
                 }
 
                 // If the storage amount value is not a postive integer, the storage filter is invalid, return false and output accordingly.
-                if(Integer.parseInt(storageValues[1].strip()) < 0) {
+                if(Integer.parseInt(storageValues[1].strip()) <= 0) {
                     System.out.println("\nInvalid storage filter: " + "\"" + storage + "\"");
                     return false;
                 }
@@ -321,7 +327,7 @@ public class InventoryService {
             } else{
 
                 // If the storage amount value is not a postive integer, the storage filter is invalid, return false and output accordingly.
-                if(Integer.parseInt(storageValues[0].strip()) < 0) {
+                if(Integer.parseInt(storageValues[0].strip()) <= 0) {
                     System.out.println("\nInvalid storage filter: " + "\"" + storage + "\"");
                     return false;
                 }
