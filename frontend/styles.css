@@ -161,3 +161,35 @@ main h2 {
 #search-button:hover {
     background-color: #dddddd;
 }
+
+/* Inventory table */
+#inventory-status {
+    color: #cccccc;
+}
+
+.table-container {
+    background-color: #1e1e1e;
+    border-radius: 8px;
+}
+
+#inventory-table {
+    width: 100%;
+    min-width: 600px;
+    border-collapse: collapse;
+}
+
+#inventory-table th,
+#inventory-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #444444;
+    text-align: left;
+}
+
+#inventory-table th {
+    background-color: #2b2b2b;
+}
+
+#inventory-table th:last-child,
+#inventory-table td:last-child {
+    text-align: right;
+}
