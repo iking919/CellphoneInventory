@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cellphone Inventory Manager</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+    <header id="top">
+        <img src="assets/smartphone-svgrepo-com.svg" class="header-icon header-icon-left">
+        <h1>Cellphone Inventory Manager</h1>
+
+        <!-- Nav bar for routing across pages-->
+        <nav>
+            <a href="index.html" class="active">Full Inventory</a>
+            <a href="inventory-search.html">Inventory Search</a>
+            <a href="add-inventory.html">Add Inventory</a>
+            <a href="manage-inventory.html">Manage Inventory</a>
+        </nav>
+        <img src="assets/search-svgrepo-com.svg" class="header-icon header-icon-right">
+    </header>
+
+    <!-- Display ordered inventory list -->
+    <main>
+        <h2>Inventory List</h2>
+        <p id="inventory-status" role="status">Loading inventory...</p>
+        <div class="table-container">
+            <table id="inventory-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Brand</th>
+                        <th scope="col">Model</th>
+                        <th scope="col">Storage</th>
+                        <th scope="col">Color</th>
+                        <th scope="col">Price</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </main>
+    <script src="js/inventory.js" defer></script>
+</body>
+</html>

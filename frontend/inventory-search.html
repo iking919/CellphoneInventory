@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cellphone Inventory Manager</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <!-- Nav bar for routing across pages-->
+    <header id="top">
+        <img src="assets/smartphone-svgrepo-com.svg" class="header-icon header-icon-left" >
+        <h1>Cellphone Inventory Manager</h1>
+        <nav>
+            <a href="index.html">Full Inventory</a>
+            <a href="inventory-search.html" class="active">Inventory Search</a>
+            <a href="add-inventory.html">Add Inventory</a>
+            <a href="manage-inventory.html">Manage Inventory</a>
+        </nav>
+        <img src="assets/search-svgrepo-com.svg" class="header-icon header-icon-right">
+    </header>
+
+    <main>
+        <h2>Inventory Search</h2>
+
+        <!-- Search form for filter attributes-->
+        <form id="search-form">
+
+            <!-- Brand Filter dropdown using predefined brands (to be changed) -->
+            <div class="filter-group">
+                <label for="brand">Brand</label>
+                <select id="brand" name="brand">
+                    <option value="">All Brands</option>
+                    <option value="Apple">Apple</option>
+                    <option value="Google">Google</option>
+                    <option value="Samsung">Samsung</option>
+                </select>
+            </div>
+
+            <!-- Model Filter text input -->
+            <div class="filter-group">
+                <label for="model">Model</label>
+                <input type="text" id="model" name="model"
+                       placeholder="Enter phone model">
+            </div>
+
+
+            <!-- Storage Filter dropdown using predefined storage amounts -->
+            <div class="filter-group">
+                <label for="storage">Storage</label>
+                <select id="storage" name="storage">
+                    <option value="">Any Storage Capacity</option>
+                    <option value="64GB">64GB</option>
+                    <option value="128GB">128GB</option>
+                    <option value="256GB">256GB</option>
+                    <option value="512GB">512GB</option>
+                    <option value="1TB">1TB</option>
+                </select>
+            </div>
+
+            <!-- Color Filter text input-->
+            <div class="filter-group">
+                <label for="color">Color</label>
+                <input type="text" id="color" name="color"
+                       placeholder="Enter phone color">
+            </div>
+
+            <!-- Minimum Price Filter uses takes exclusively integers and decimals -->
+            <div class="filter-group">
+                <label for="minPrice">Minimum Price</label>
+                <div class="currency-input">
+                    <span>$</span>
+                    <input type="text" inputmode="decimal" pattern="[0-9]*([.][0-9]+)?"
+                        id="minPrice" name="minPrice"
+                        placeholder="Enter minimum phone price">
+                </div>
+            </div>
+
+            <!-- Maximum Price Filter takes exclusively integers and decimals -->
+            <div class="filter-group">
+                <label for="maxPrice">Maximum Price</label>
+                <div class="currency-input">
+                    <span>$</span>
+                    <input type="text" inputmode="decimal" pattern="[0-9]*([.][0-9]+)?"
+                        id="maxPrice" name="maxPrice"
+                        placeholder="Enter maximum phone price">
+                </div>
+            </div>
+
+            <!-- Submit button for filter search -->
+            <button type="submit" id="search-button">Search Filters</button>
+        </form>
+    </main>
+
+    <!-- Script to clean price inputs -->
+    <script>
+        
+        // Select currency inputs, removing non integers, only allowing one decimal.
+        document.querySelectorAll(".currency-input input").forEach((input) => {
+            const updatePrice = () => {
+                input.value = input.value.replace(/[^0-9.]/g, "").replace(/(\..*)\./g, "$1");
+            };
+
+            // Run update price whenever input changes.
+            input.addEventListener("input", updatePrice);
+            updatePrice();
+        });
+    </script>
+    
+</body>
+</html>

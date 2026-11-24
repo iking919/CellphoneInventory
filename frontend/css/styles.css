@@ -1,0 +1,330 @@
+
+/* Shared styles base layout, header, navigation, and content */
+
+/* Base layout */
+body {
+    margin: 0;
+    font-family: Arial;
+    background-color: #121212;
+    color: white;
+}
+
+/* Header */
+header {
+    background-color: #000000;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    grid-template-areas:
+        "left title right"
+        "nav nav nav";
+    align-items: center;
+    gap: 16px;
+    border-bottom: 1px solid #333333;
+}
+
+/* Icons between the title and header edges */
+.header-icon {
+    position: static;
+    width: 100px;
+    height: 100px;
+    filter: invert(1);
+}
+
+.header-icon-left {
+    grid-area: left;
+    justify-self: center;
+}
+
+.header-icon-right {
+    grid-area: right;
+    justify-self: center;
+}
+
+/* Page title */
+header h1 {
+    grid-area: title;
+    margin: 24px;
+    font-size: 48px;
+    text-align: center;
+}
+
+/* Navigation links */
+header nav {
+    grid-area: nav;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+/* Navigation links */
+header nav a {
+    padding: 8px 12px;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+/* Navigation hover and focus states */
+header nav a:hover,
+header nav a:focus-visible {
+    background-color: #2b2b2b;
+}
+
+/* Highlight the current page */
+header nav a.active {
+    background-color: #2b2b2b;
+    font-weight: bold;
+}
+
+/* Main content */
+main {
+    padding: 40px;
+}
+
+main h2 {
+    font-size: 28px;
+}
+
+
+/* Shared form styles (Add Inventory and Inventory Search) */
+
+/* Search form and add form layout */
+#search-form,
+#add-phone-form {
+    background-color: #1e1e1e;
+    padding: 25px;
+    border-radius: 8px;
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 20px;
+}
+
+/* Individual filter containers */
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    min-width: 0;
+}
+
+/* Filter labels */
+.filter-group label {
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+/* Input fields and dropdowns */
+.filter-group input,
+.filter-group select {
+    padding: 10px;
+    background-color: #2b2b2b;
+    color: white;
+    border: 1px solid #444444;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* Keep money symbol and input together for price */
+.currency-input {
+    display: flex;
+    align-items: center;
+}
+
+.currency-input span {
+    display: inline;
+    margin-right: 8px;
+}
+
+.currency-input input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Hide number input arrows on price forms */
+#add-phone-form input[type="number"],
+#edit-phone-form input[type="number"] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+#add-phone-form input[type="number"]::-webkit-inner-spin-button,
+#add-phone-form input[type="number"]::-webkit-outer-spin-button,
+#edit-phone-form input[type="number"]::-webkit-inner-spin-button,
+#edit-phone-form input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Search Filters and Add Phone buttons */
+#search-button,
+#add-phone-button {
+    grid-column: 1 / -1;
+    justify-self: center;
+    min-width: 180px;
+    padding: 12px 24px;
+    background-color: #28A745;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#search-button:hover,
+#add-phone-button:hover {
+    background-color: #dddddd;
+}
+
+/* Search form status and Add Inventory field validation */
+#add-phone-form input.invalid {
+    border-color: #ff5555;
+    outline: 2px solid #ff5555;
+    outline-offset: 1px;
+}
+
+.form-status {
+    min-height: 1.2em;
+}
+
+.form-status.error {
+    color: #ff7777;
+}
+
+
+/* Add Inventory page */
+
+/* Unique add price form */
+.add-price-group {
+    grid-column: 1 / -1;
+    width: calc(50% - 10px);
+    justify-self: center;
+}
+
+
+/* Full Inventory and Manage Inventory shared tables */
+
+/* Shared inventory table styles used on both pages */
+#inventory-status {
+    color: #cccccc;
+}
+
+.table-container {
+    overflow-x: auto;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+}
+
+#inventory-table {
+    width: 100%;
+    min-width: 600px;
+    border-collapse: collapse;
+}
+
+#inventory-table th,
+#inventory-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #444444;
+    text-align: left;
+}
+
+#inventory-table th {
+    background-color: #2b2b2b;
+}
+
+#inventory-table th:last-child,
+#inventory-table td:last-child {
+    text-align: left;
+}
+
+/* Manage Inventory page */
+
+/* Edit and delete actions */
+.edit-button,
+.delete-button {
+    padding: 8px 12px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.edit-button {
+    margin-right: 16px;
+    background-color: #444444;
+}
+
+.edit-button:hover {
+    background-color: #666666;
+}
+
+.delete-button {
+    background-color: #8f1d1d;
+}
+
+.delete-button:hover {
+    background-color: #b3261e;
+}
+
+/* Confirmation dialogs used by Add Inventory and Manage Inventory deletions */
+#delete-confirmation,
+#add-confirmation,
+#edit-confirmation {
+    width: min(90vw, 720px);
+    padding: 24px;
+    background-color: #1e1e1e;
+    color: white;
+    border: 1px solid #444444;
+    border-radius: 8px;
+}
+
+#delete-confirmation::backdrop,
+#add-confirmation::backdrop,
+#edit-confirmation::backdrop {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+#delete-confirmation h2,
+#add-confirmation h2,
+#edit-confirmation h2 {
+    margin-top: 0;
+    font-size: 22px;
+}
+
+.edit-phone-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin: 16px 0;
+}
+
+.edit-phone-fields .filter-group {
+    margin: 0;
+}
+
+.confirmation-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.confirmation-actions button {
+    padding: 8px 14px;
+    color: white;
+    background-color: #28A745;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.confirmation-actions button[value="cancel"] {
+    background-color: #444444;
+}
+
+#delete-confirmation button[value="confirm"],
+#add-confirmation button[value="confirm"] {
+    background-color: #8f1d1d;
+}

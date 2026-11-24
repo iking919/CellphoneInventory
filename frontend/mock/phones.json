@@ -1,0 +1,23 @@
+[
+    {
+        "brand": "Google",
+        "model": "Pixel 8",
+        "storage": "128 GB",
+        "color": "Black",
+        "price": 799.99
+    },
+    {
+        "brand": "Apple",
+        "model": "iPhone 15",
+        "storage": "128 GB",
+        "color": "Blue",
+        "price": 799.99
+    },
+    {
+        "brand": "Samsung",
+        "model": "Galaxy S24",
+        "storage": "256 GB",
+        "color": "Gray",
+        "price": 849.99
+    }
+]
