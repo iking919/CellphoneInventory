@@ -1,3 +1,12 @@
+/*
+    inventory.js contains logic to handle and properly display phone inventory.
+    This includes validating phone objects, formatting prices, and displaying a 
+    formal table. 
+
+    Right now it uses hardcoded mock json data but will be updated.
+*/
+
+
 // Change this to the Spring Boot endpoint when it is ready.
 const inventoryUrl = "mock/phones.json";
 
@@ -29,7 +38,7 @@ function isPhone(phone) {
 function displayInventory(phones) {
     
     // For each phone create a table row with all 5 properties.
-    const rows = phones.map((phone) => {
+    const rows = phones.map((phone, index) => {
         const row = document.createElement("tr");
         const values = [
             phone.brand,
@@ -45,16 +54,43 @@ function displayInventory(phones) {
             cell.textContent = value;
             row.appendChild(cell);
         });
+        
 
-        // Display delete button on remove inventory page
-        if (inventoryTable.dataset.allowDelete === "true") {
-            const actionCell = document.createElement("td");
+        // Display edit and delete buttons on the manage inventory page
+        if (inventoryTable.dataset.allowEdit=== "true") {
+
+            // Create edit button corresponding for each phone
+            const editCell = document.createElement("td");
+            const editButton = document.createElement("button");
+            editButton.type = "button";
+            editButton.className = "edit-button";
+            editButton.textContent = "Edit";
+            editButton.dataset.phoneIndex = String(index);
+
+            // Include phone attributes for editting fields popup.
+            editButton.dataset.brand = phone.brand;
+            editButton.dataset.model = phone.model;
+            editButton.dataset.storage = phone.storage;
+            editButton.dataset.color = phone.color;
+            editButton.dataset.price = String(phone.price);
+            editCell.appendChild(editButton);
+            row.appendChild(editCell);
+
+            // Create delete button corresponding for each phone
+            const deleteCell = document.createElement("td");
             const deleteButton = document.createElement("button");
             deleteButton.type = "button";
             deleteButton.className = "delete-button";
             deleteButton.textContent = "Delete";
-            actionCell.appendChild(deleteButton);
-            row.appendChild(actionCell);
+
+            // Include phone attributes to confirm selected phone deletion popup
+            deleteButton.dataset.brand = phone.brand;
+            deleteButton.dataset.model = phone.model;
+            deleteButton.dataset.storage = phone.storage;
+            deleteButton.dataset.color = phone.color;
+            deleteButton.dataset.price = priceFormatter.format(phone.price);
+            deleteCell.appendChild(deleteButton);
+            row.appendChild(deleteCell);
         }
 
         return row;
@@ -64,7 +100,7 @@ function displayInventory(phones) {
     inventoryBody.replaceChildren(...rows);
 }
 
-// Fetch the inventory json and load into list of phones
+// Fetch the inventory json and load into list of phones 
 async function loadInventory() {
     
     // Try block attempts to fetch the inventory json, ensure all entries are phones,

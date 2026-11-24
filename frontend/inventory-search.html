@@ -17,7 +17,7 @@
             <a href="index.html">Full Inventory</a>
             <a href="inventory-search.html" class="active">Inventory Search</a>
             <a href="add-inventory.html">Add Inventory</a>
-            <a href="remove-inventory.html">Remove Inventory</a>
+            <a href="manage-inventory.html">Manage Inventory</a>
         </nav>
         <img src="assets/search-svgrepo-com.svg" class="header-icon header-icon-right">
     </header>
@@ -69,7 +69,7 @@
 
             <!-- Minimum Price Filter uses takes exclusively integers and decimals -->
             <div class="filter-group">
-                <label for="minPrice">Minimum Price($)</label>
+                <label for="minPrice">Minimum Price</label>
                 <div class="currency-input">
                     <span>$</span>
                     <input type="text" inputmode="decimal" pattern="[0-9]*([.][0-9]+)?"
@@ -80,7 +80,7 @@
 
             <!-- Maximum Price Filter takes exclusively integers and decimals -->
             <div class="filter-group">
-                <label for="maxPrice">Maximum Price ($)</label>
+                <label for="maxPrice">Maximum Price</label>
                 <div class="currency-input">
                     <span>$</span>
                     <input type="text" inputmode="decimal" pattern="[0-9]*([.][0-9]+)?"
@@ -94,16 +94,13 @@
         </form>
     </main>
 
-    <!-- Script to clean price inputs and show the dollar sign -->
+    <!-- Script to clean price inputs -->
     <script>
         
         // Select currency inputs, removing non integers, only allowing one decimal.
         document.querySelectorAll(".currency-input input").forEach((input) => {
             const updatePrice = () => {
                 input.value = input.value.replace(/[^0-9.]/g, "").replace(/(\..*)\./g, "$1");
-                
-                // If the input isn't empty add the has-value class (adds "$").
-                input.parentElement.classList.toggle("has-value", input.value !== "");
             };
 
             // Run update price whenever input changes.

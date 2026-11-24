@@ -1,14 +1,15 @@
+/* 
+    add-phone.js contains logic to add phones to existing inventory. This includes
+    a form with all needed inputs and field checking, along with inventory creation itself.
+    
+    Spring boot is needed to properly connect backend logic.
+*/
+
+// Establish entry points for add phone form and confirmation button.
 const addPhoneForm = document.querySelector("#add-phone-form");
 const addPhoneStatus = document.querySelector("#add-phone-status");
 const addPhoneDialog = document.querySelector("#add-confirmation");
-const priceInput = document.querySelector("#price");
-const currencyInput = priceInput.parentElement;
 const requiredFields = Array.from(addPhoneForm.querySelectorAll("[required]"));
-
-// Use has-value to add "$" to price input.
-function updatePriceSymbol() {
-    currencyInput.classList.toggle("has-value", priceInput.value !== "");
-}
 
 // Validate that all fields are filled before creating allowing a phone addition
 function validateAddPhoneForm() {
@@ -32,9 +33,12 @@ function validateAddPhoneForm() {
     return formIsValid;
 }
 
-// Prevent browser default form submission and page reload, opening custom confirmation.
+// Handle submit button clicks.
 addPhoneForm.addEventListener("submit", (event) => {
+    // Prevent browser default form submission and page reload.
     event.preventDefault();
+    
+    // Check valid data and display popup.
     if (validateAddPhoneForm()) {
         addPhoneDialog.showModal();
     }
@@ -54,15 +58,10 @@ requiredFields.forEach((field) => {
     });
 });
 
-// TEMPORARY output phone creation isn't connected since logic isn't added
+// TODO: Add springboot logic to update phones accordingly.
 addPhoneDialog.addEventListener("close", () => {
     if (addPhoneDialog.returnValue === "confirm") {
         addPhoneStatus.textContent = "Phone creation is not connected yet.";
         addPhoneStatus.classList.remove("error");
     }
 });
-
-
-// Run updatePriceSymbol whenever price field changes.
-priceInput.addEventListener("input", updatePriceSymbol);
-updatePriceSymbol();
