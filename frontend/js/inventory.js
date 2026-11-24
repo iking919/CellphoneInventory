@@ -1,8 +1,9 @@
-// update URL when the Spring Boot endpoint is ready.
-const inventoryUrl = "phones.json";
+// Change this to the Spring Boot endpoint when it is ready.
+const inventoryUrl = "mock/phones.json";
 
 // Establish entry for phone table and inventory status text.
-const inventoryBody = document.querySelector("#inventory-table tbody");
+const inventoryTable = document.querySelector("#inventory-table");
+const inventoryBody = inventoryTable.querySelector("tbody");
 const inventoryStatus = document.querySelector("#inventory-status");
 
 // Use US currency in table.
@@ -45,6 +46,17 @@ function displayInventory(phones) {
             row.appendChild(cell);
         });
 
+        // Display delete button on remove inventory page
+        if (inventoryTable.dataset.allowDelete === "true") {
+            const actionCell = document.createElement("td");
+            const deleteButton = document.createElement("button");
+            deleteButton.type = "button";
+            deleteButton.className = "delete-button";
+            deleteButton.textContent = "Delete";
+            actionCell.appendChild(deleteButton);
+            row.appendChild(actionCell);
+        }
+
         return row;
     });
 
@@ -77,7 +89,7 @@ async function loadInventory() {
 
     // Write any errors to content and return warning text.
     } catch (error) {
-        inventoryStatus.textContent = "Could not load inventory. Check phones.json and use a local web server.";
+        inventoryStatus.textContent = "Could not load inventory. Check mock/phones.json and use a local web server.";
         console.error("Inventory load failed:", error);
     }
 }

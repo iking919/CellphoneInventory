@@ -87,7 +87,8 @@ main h2 {
 
 
 /* Search form, displayed in a grid*/
-#search-form {
+#search-form,
+#add-phone-form {
     background-color: #1e1e1e;
     padding: 25px;
     border-radius: 8px;
@@ -143,8 +144,21 @@ main h2 {
     box-sizing: border-box;
 }
 
+/* Hide number input arrows on the add-phone form */
+#add-phone-form input[type="number"] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+#add-phone-form input[type="number"]::-webkit-inner-spin-button,
+#add-phone-form input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 /* Search button */
-#search-button {
+#search-button,
+#add-phone-button {
     grid-column: 1 / -1;
     justify-self: center;
     min-width: 180px;
@@ -158,8 +172,31 @@ main h2 {
     cursor: pointer;
 }
 
-#search-button:hover {
+#search-button:hover,
+#add-phone-button:hover {
     background-color: #dddddd;
+}
+
+/* Show invalid add-phone fields clearly */
+#add-phone-form input.invalid {
+    border-color: #ff5555;
+    outline: 2px solid #ff5555;
+    outline-offset: 1px;
+}
+
+.form-status {
+    min-height: 1.2em;
+}
+
+.form-status.error {
+    color: #ff7777;
+}
+
+/* Center the single price field within the add-phone form */
+.add-price-group {
+    grid-column: 1 / -1;
+    width: calc(50% - 10px);
+    justify-self: center;
 }
 
 /* Inventory table */
@@ -168,6 +205,7 @@ main h2 {
 }
 
 .table-container {
+    overflow-x: auto;
     background-color: #1e1e1e;
     border-radius: 8px;
 }
@@ -192,4 +230,63 @@ main h2 {
 #inventory-table th:last-child,
 #inventory-table td:last-child {
     text-align: right;
+}
+
+/* Delete button */
+.delete-button {
+    padding: 8px 12px;
+    background-color: #8f1d1d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.delete-button:hover {
+    background-color: #b3261e;
+}
+
+/* Confirmation dialogs */
+#delete-confirmation,
+#add-confirmation {
+    width: min(90vw, 360px);
+    padding: 24px;
+    background-color: #1e1e1e;
+    color: white;
+    border: 1px solid #444444;
+    border-radius: 8px;
+}
+
+#delete-confirmation::backdrop,
+#add-confirmation::backdrop {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+#delete-confirmation h2,
+#add-confirmation h2 {
+    margin-top: 0;
+    font-size: 22px;
+}
+
+.confirmation-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.confirmation-actions button {
+    padding: 8px 14px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.confirmation-actions button[value="cancel"] {
+    background-color: #444444;
+}
+
+#delete-confirmation button[value="confirm"],
+#add-confirmation button[value="confirm"] {
+    background-color: #8f1d1d;
 }

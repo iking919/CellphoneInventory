@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cellphone Inventory Manager</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <!-- Nav bar for routing across pages-->
+    <header id="top">
+        <img src="assets/smartphone-svgrepo-com.svg" class="header-icon header-icon-left">
+        <h1>Cellphone Inventory Manager</h1>
+        <nav>
+            <a href="index.html">Full Inventory</a>
+            <a href="inventory-search.html">Inventory Search</a>
+            <a href="add-inventory.html" class="active">Add Inventory</a>
+            <a href="remove-inventory.html">Remove Inventory</a>
+        </nav>
+        <img src="assets/search-svgrepo-com.svg" class="header-icon header-icon-right">
+    </header>
+
+    <!-- Add inventory form to create new phones -->
+    <main>
+        <h2>Add Inventory</h2>
+        <p>Add new phones or remove existing inventory records.</p>
+
+        <!-- Establish one form for all 5 fields -->
+        <p id="add-phone-status" class="form-status" role="alert"></p>
+        <form id="add-phone-form" novalidate>
+            <div class="filter-group">
+                <label for="brand">Brand</label>
+                <input type="text" id="brand" name="brand"
+                       placeholder="Enter brand..." required>
+            </div>
+
+            <div class="filter-group">
+                <label for="model">Model</label>
+                <input type="text" id="model" name="model"
+                       placeholder="Enter model..." required>
+            </div>
+
+            <div class="filter-group">
+                <label for="storage">Storage</label>
+                <input type="text" id="storage" name="storage"
+                       placeholder="Enter storage..." required>
+            </div>
+
+            <div class="filter-group">
+                <label for="color">Color</label>
+                <input type="text" id="color" name="color"
+                       placeholder="Enter color..." required>
+            </div>
+
+            <div class="filter-group add-price-group">
+                <label for="price">Price</label>
+                <div class="currency-input">
+                    <span>$</span>
+                    <input type="number" id="price" name="price"
+                           inputmode="decimal" min="0.01" step="0.01"
+                           placeholder="Enter price..." required>
+                </div>
+            </div>
+
+            <button type="submit" id="add-phone-button">Add Phone to Inventory</button>
+        </form>
+    </main>
+
+    <!-- Confirmation popup for adding phones -->
+    <dialog id="add-confirmation">
+        <h2 id="add-confirmation-title">Confirm new phone</h2>
+        <p id="add-confirmation-message">Are you sure you want to add this phone?</p>
+        <form method="dialog" class="confirmation-actions">
+            <button type="submit" value="cancel" autofocus>No</button>
+            <button type="submit" value="confirm">Yes</button>
+        </form>
+    </dialog>
+    <script src="js/add-phone.js" defer></script>
+</body>
+</html>
