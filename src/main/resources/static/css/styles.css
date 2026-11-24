@@ -25,7 +25,8 @@ header {
 
 /* Icons between the title and header edges */
 .header-icon {
-    position: static;
+    position: relative;
+    top: 20px;
     width: 100px;
     height: 100px;
     filter: invert(1);

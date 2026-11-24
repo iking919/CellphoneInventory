@@ -1,3 +1,4 @@
+package CellphoneInventory;
 /*
     The Phone class represents individual phones in the store's inventory.
     All filtering and inventory operations are built around these objects.
