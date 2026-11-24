@@ -1,0 +1,140 @@
+
+/* General page styling */
+body {
+    margin: 0;
+    font-family: Arial;
+    background-color: #121212;
+    color: white;
+}
+
+/* Application header */
+header {
+    background-color: #000000;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    border-bottom: 1px solid #333333;
+}
+
+/* Page title */
+header h1 {
+    margin: 24px;
+    font-size: 48px;
+    text-align: center;
+}
+
+/* Navigation links */
+header nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+/* Manage nav bar elements */
+header nav a {
+    padding: 8px 12px;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+/* Enable hovering for nav bar elements*/
+header nav a:hover,
+header nav a:focus-visible {
+    background-color: #2b2b2b;
+}
+
+/* Highlight the current page */
+header nav a.active {
+    background-color: #2b2b2b;
+    font-weight: bold;
+}
+
+/* Main content */
+main {
+    padding: 40px;
+}
+
+main h2 {
+    font-size: 28px;
+}
+
+
+/* Search form, displayed in a grid*/
+#search-form {
+    background-color: #1e1e1e;
+    padding: 25px;
+    border-radius: 8px;
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 20px;
+}
+
+/* Individual filter containers */
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    min-width: 0;
+}
+
+/* Filter labels */
+.filter-group label {
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+/* Input fields and dropdowns */
+.filter-group input, 
+.filter-group select {
+    padding: 10px;
+    background-color: #2b2b2b;
+    color: white;
+    border: 1px solid #444444;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* Keep money symbol and input together */
+.currency-input {
+    display: flex;
+    align-items: center;
+}
+
+.currency-input span {
+    display: none;
+    margin-right: 8px;
+}
+
+/* Has-value class un-hides money symbol */
+.currency-input.has-value span {
+    display: inline;
+}
+
+.currency-input input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Search button */
+#search-button {
+    grid-column: 1 / -1;
+    justify-self: center;
+    min-width: 180px;
+    padding: 12px 24px;
+    background-color: #ffffff;
+    color: #121212;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#search-button:hover {
+    background-color: #dddddd;
+}
