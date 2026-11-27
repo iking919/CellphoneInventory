@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cellphone Inventory Manager</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+    <header id="top">
+        <img src="assets/smartphone-svgrepo-com.svg" class="header-icon header-icon-left">
+        <h1>Cellphone Inventory Manager</h1>
+
+        <!-- Navigation links to the application's main pages -->
+        <nav>
+            <a href="index.html" class="active">Full Inventory</a>
+            <a href="inventory-search.html">Inventory Search</a>
+            <a href="add-inventory.html">Add Inventory</a>
+            <a href="manage-inventory.html">Manage Inventory</a>
+        </nav>
+    </header>
+
+    <!-- Inventory list populated dynamically by inventory.js -->
+    <main>
+        <h2>Inventory List</h2>
+        <p id="inventory-status" role="status">Loading inventory...</p>
+        <div class="table-container">
+            <table id="inventory-table" data-load-inventory="true">
+                <thead>
+                    <tr>
+                        <th scope="col" aria-sort="none"><button type="button" class="sort-button" data-sort="brand">Brand <span class="sort-indicator" aria-hidden="true">&#8597;</span></button></th>
+                        <th scope="col" aria-sort="none"><button type="button" class="sort-button" data-sort="model">Model <span class="sort-indicator" aria-hidden="true">&#8597;</span></button></th>
+                        <th scope="col" aria-sort="none"><button type="button" class="sort-button" data-sort="storage">Storage <span class="sort-indicator" aria-hidden="true">&#8597;</span></button></th>
+                        <th scope="col" aria-sort="none"><button type="button" class="sort-button" data-sort="color">Color <span class="sort-indicator" aria-hidden="true">&#8597;</span></button></th>
+                        <th scope="col" aria-sort="none"><button type="button" class="sort-button" data-sort="price">Price <span class="sort-indicator" aria-hidden="true">&#8597;</span></button></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </main>
+    <script src="js/inventory.js" defer></script>
+</body>
+</html>

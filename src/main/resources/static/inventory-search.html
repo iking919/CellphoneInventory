@@ -1,0 +1,118 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cellphone Inventory Manager</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <!-- Navigation links to the application's main pages -->
+    <header id="top">
+        <img src="assets/smartphone-svgrepo-com.svg" class="header-icon header-icon-left" >
+        <h1>Cellphone Inventory Manager</h1>
+        <nav>
+            <a href="index.html">Full Inventory</a>
+            <a href="inventory-search.html" class="active">Inventory Search</a>
+            <a href="add-inventory.html">Add Inventory</a>
+            <a href="manage-inventory.html">Manage Inventory</a>
+        </nav>
+    </header>
+
+    <!-- Inventory Search form and results -->
+    <main>
+        <h2>Inventory Search</h2>
+
+        <!-- Search form containing phone filter attributes -->
+        <form id="search-form">
+
+            <!-- Brand options are populated from the current inventory -->
+            <div class="filter-group">
+                <label for="brand">Brand</label>
+                <select id="brand" name="brand" disabled>
+                    <option value="">All Brands</option>
+                </select>
+            </div>
+
+            <!-- Model filter text input -->
+            <div class="filter-group">
+                <label for="model">Model</label>
+                <input type="text" id="model" name="model"
+                       placeholder="Enter phone model">
+            </div>
+
+            <!-- Storage options are populated from the current inventory -->
+            <div class="filter-group">
+                <label for="storage">Storage</label>
+                <select id="storage" name="storage" disabled>
+                    <option value="">Any Storage Capacity</option>
+                </select>
+            </div>
+
+            <!-- Color filter text input -->
+            <div class="filter-group">
+                <label for="color">Color</label>
+                <input type="text" id="color" name="color"
+                       placeholder="Enter phone color">
+            </div>
+
+            <!-- Minimum price filter -->
+            <div class="filter-group">
+                <label for="minPrice">Minimum Price</label>
+                <div class="currency-input">
+                    <span>$</span>
+                    <input type="text" inputmode="decimal" pattern="[0-9]*([.][0-9]+)?"
+                        id="minPrice" name="minPrice"
+                        placeholder="Enter minimum phone price">
+                </div>
+            </div>
+
+            <!-- Maximum price filter -->
+            <div class="filter-group">
+                <label for="maxPrice">Maximum Price</label>
+                <div class="currency-input">
+                    <span>$</span>
+                    <input type="text" inputmode="decimal" pattern="[0-9]*([.][0-9]+)?"
+                        id="maxPrice" name="maxPrice"
+                        placeholder="Enter maximum phone price">
+                </div>
+            </div>
+
+            <!-- Submit button for the inventory search -->
+            <button type="submit" id="search-button">Search Filters</button>
+        </form>
+
+        <!-- Search status and filtered inventory results -->
+        <p id="search-status" class="form-status" role="status"></p>
+        <section id="search-results" hidden aria-labelledby="search-results-heading">
+            <div class="search-results-header">
+                <h3 id="search-results-heading">Search Results</h3>
+                <button type="button" id="clear-filters-button" class="secondary-button">
+                    Clear filters
+                </button>
+            </div>
+            <p id="inventory-status" role="status"></p>
+            <div class="table-container">
+                <table id="inventory-table">
+                    <thead>
+                        <tr>
+                            <th scope="col" aria-sort="none"><button type="button" class="sort-button" data-sort="brand">Brand <span class="sort-indicator" aria-hidden="true">&#8597;</span></button></th>
+                            <th scope="col" aria-sort="none"><button type="button" class="sort-button" data-sort="model">Model <span class="sort-indicator" aria-hidden="true">&#8597;</span></button></th>
+                            <th scope="col" aria-sort="none"><button type="button" class="sort-button" data-sort="storage">Storage <span class="sort-indicator" aria-hidden="true">&#8597;</span></button></th>
+                            <th scope="col" aria-sort="none"><button type="button" class="sort-button" data-sort="color">Color <span class="sort-indicator" aria-hidden="true">&#8597;</span></button></th>
+                            <th scope="col" aria-sort="none"><button type="button" class="sort-button" data-sort="price">Price <span class="sort-indicator" aria-hidden="true">&#8597;</span></button></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/inventory.js" defer></script>
+    <script src="js/inventory-search.js" defer></script>
+    
+</body>
+</html>

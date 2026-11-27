@@ -1,0 +1,405 @@
+
+/* Shared styles base layout, header, navigation, and content */
+
+/* Base layout */
+body {
+    margin: 0;
+    font-family: Arial;
+    background-color: #121212;
+    color: white;
+}
+
+/* Header */
+header {
+    background-color: #000000;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    grid-template-areas:
+        "left title right"
+        "nav nav nav";
+    align-items: center;
+    border-bottom: 1px solid #333333;
+}
+
+/* Icons between the title and header edges */
+.header-icon {
+    position: relative;
+    top: 20px;
+    width: 100px;
+    height: 100px;
+    filter: invert(1);
+}
+
+.header-icon-left {
+    grid-area: left;
+    justify-self: end;
+}
+
+/* Page title */
+header h1 {
+    grid-area: title;
+    margin: 24px;
+    font-size: 48px;
+    text-align: center;
+}
+
+/* Navigation links */
+header nav {
+    grid-area: nav;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+/* Navigation links */
+header nav a {
+    padding: 8px 12px;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+/* Navigation hover and focus states */
+header nav a:hover,
+header nav a:focus-visible {
+    background-color: #2b2b2b;
+}
+
+/* Highlight the current page */
+header nav a.active {
+    background-color: #2b2b2b;
+    font-weight: bold;
+}
+
+/* Main content */
+main {
+    padding: 40px;
+}
+
+/* Section headings */
+main h2 {
+    font-size: 28px;
+}
+
+
+/* Shared form styles (Add Inventory and Inventory Search) */
+
+/* Search form and add form layout */
+#search-form,
+#add-phone-form {
+    background-color: #1e1e1e;
+    padding: 25px;
+    border-radius: 8px;
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 20px;
+}
+
+#search-form[hidden],
+#search-results[hidden] {
+    display: none;
+}
+
+/* Individual filter containers */
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    min-width: 0;
+}
+
+/* Filter labels */
+.filter-group label {
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+/* Input fields and dropdowns */
+.filter-group input,
+.filter-group select {
+    padding: 10px;
+    background-color: #2b2b2b;
+    color: white;
+    border: 1px solid #444444;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* Keep money symbol and input together for price */
+.currency-input {
+    display: flex;
+    align-items: center;
+}
+
+.currency-input span {
+    display: inline;
+    margin-right: 8px;
+}
+
+.currency-input input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Hide number input arrows on price forms */
+#add-phone-form input[type="number"],
+#edit-phone-form input[type="number"] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+#add-phone-form input[type="number"]::-webkit-inner-spin-button,
+#add-phone-form input[type="number"]::-webkit-outer-spin-button,
+#edit-phone-form input[type="number"]::-webkit-inner-spin-button,
+#edit-phone-form input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Search Filters and Add Phone buttons */
+#search-button,
+#add-phone-button {
+    grid-column: 1 / -1;
+    justify-self: center;
+    min-width: 180px;
+    padding: 12px 24px;
+    background-color: #28A745;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#search-button:hover,
+#add-phone-button:hover {
+    background-color: #dddddd;
+}
+
+/* Clear filters action */
+#clear-filters-button {
+    margin-top: 0;
+    padding: 10px 18px;
+    background-color: #444444;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+/* Search results heading and controls */
+.search-results-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.search-results-header h3 {
+    margin: 0;
+}
+
+/* Clear filters hover state */
+#clear-filters-button:hover {
+    background-color: #666666;
+}
+
+/* Search form status and Add Inventory field validation */
+#add-phone-form input.invalid {
+    border-color: #ff5555;
+    outline: 2px solid #ff5555;
+    outline-offset: 1px;
+}
+
+
+.form-status.error {
+    color: #ff7777;
+}
+
+/* Add Inventory page */
+
+/* Unique add price form */
+.add-price-group {
+    grid-column: 1 / -1;
+    width: calc(50% - 10px);
+    justify-self: center;
+}
+
+
+/* Full Inventory and Manage Inventory shared tables */
+
+/* Shared inventory table styles used on both pages */
+#inventory-status {
+    color: #cccccc;
+}
+
+/* Scrollable inventory table container */
+.table-container {
+    max-height: 65vh;
+    overflow: auto;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+}
+
+/* Inventory table dimensions and collapsed borders */
+#inventory-table {
+    width: 100%;
+    min-width: 600px;
+    border-collapse: collapse;
+}
+
+/* Inventory table cell spacing and borders */
+#inventory-table th,
+#inventory-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #444444;
+    text-align: left;
+}
+
+/* Sticky inventory table headers */
+#inventory-table th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: #2b2b2b;
+}
+
+/* Table sorting controls */
+.sort-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0;
+    color: inherit;
+    background: transparent;
+    border: 0;
+    font: inherit;
+    cursor: pointer;
+}
+
+/* Sorting button hover and keyboard focus states */
+.sort-button:hover,
+.sort-button:focus-visible {
+    text-decoration: underline;
+}
+
+/* Sorting direction indicator */
+.sort-indicator {
+    color: #bbbbbb;
+    font-size: 0.8em;
+}
+
+/* Keep the final inventory table column left-aligned */
+#inventory-table th:last-child,
+#inventory-table td:last-child {
+    text-align: left;
+}
+
+/* Manage Inventory page */
+
+/* Edit and delete actions */
+.edit-button,
+.delete-button {
+    padding: 8px 12px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.edit-button {
+    margin-right: 16px;
+    background-color: #444444;
+}
+
+/* Edit button hover state */
+.edit-button:hover {
+    background-color: #666666;
+}
+
+/* Delete button default state */
+.delete-button {
+    background-color: #8f1d1d;
+}
+
+/* Delete button hover state */
+.delete-button:hover {
+    background-color: #b3261e;
+}
+
+/* Confirmation dialogs used by Add Inventory and Manage Inventory deletions */
+#delete-confirmation,
+#add-confirmation,
+#edit-confirmation {
+    width: min(90vw, 720px);
+    padding: 24px;
+    background-color: #1e1e1e;
+    color: white;
+    border: 1px solid #444444;
+    border-radius: 8px;
+}
+
+/* Dark overlay behind confirmation dialogs */
+#delete-confirmation::backdrop,
+#add-confirmation::backdrop,
+#edit-confirmation::backdrop {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Confirmation dialog titles */
+#delete-confirmation h2,
+#add-confirmation h2,
+#edit-confirmation h2 {
+    margin-top: 0;
+    font-size: 22px;
+}
+
+/* Edit phone fields layout */
+.edit-phone-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin: 16px 0;
+}
+
+/* Remove default spacing from edit form groups */
+.edit-phone-fields .filter-group {
+    margin: 0;
+}
+
+/* Confirmation dialog action row */
+.confirmation-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* Shared confirmation action button style */
+.confirmation-actions button {
+    padding: 8px 14px;
+    color: white;
+    background-color: #28A745;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Cancel action styling */
+.confirmation-actions button[value="cancel"] {
+    background-color: #444444;
+}
+
+/* Confirm styling for add dialog */
+#add-confirmation button[value="confirm"] {
+    background-color: #28A745;
+}
+
+/* Confirm styling for delete dialog */
+#delete-confirmation button[value="confirm"] {
+    background-color: #8f1d1d;
+}
