@@ -33,9 +33,9 @@ class InventoryServiceTest {
 
         // Ensure the results are ordered by increasing price and contain only Google phones < $900.
         assertEquals(List.of("Pixel 6a", "Pixel 7a", "Pixel 8", "Pixel 8"),
-                result.stream().map(Phone::getModel).toList());
+                result.stream().map(phone -> phone.getModel()).toList());
         assertEquals(List.of(399.99, 549.99, 799.99, 859.99),
-                result.stream().map(Phone::getPrice).toList());
+                result.stream().map(phone -> phone.getPrice()).toList());
         assertTrue(result.stream().allMatch(phone -> phone.getBrand().equals("Google")));
         assertTrue(result.stream().allMatch(phone -> phone.getPrice() < 900));
     }
@@ -87,7 +87,7 @@ class InventoryServiceTest {
                 phones, List.of("Storage => > 512 GB"));
 
         // Ensure only the 1 TB phone matches; the phone exactly at 512 GB is excluded.
-        assertEquals(List.of("Pixel B"), result.stream().map(Phone::getModel).toList());
+        assertEquals(List.of("Pixel B"), result.stream().map(phone -> phone.getModel()).toList());
     }
 
     // returnsSortedCopyWhenNoFiltersAreApplied tests sorting without changing the original list of phones.
@@ -110,7 +110,7 @@ class InventoryServiceTest {
 
         // Ensure the original list of phones remain inteact.
         assertSame(originalFirst, phones.get(0));
-        assertEquals(List.of("Apple", "Google"), result.stream().map(Phone::getBrand).toList());
+        assertEquals(List.of("Apple", "Google"), result.stream().map(phone -> phone.getBrand()).toList());
     }
 
     // acceptsValidFilterFormsWithoutCaseSensitivity tests accepted syntax for every supported phone field.

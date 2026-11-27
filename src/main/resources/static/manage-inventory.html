@@ -8,7 +8,7 @@
 </head>
 <body>
 
-    <!-- Nav bar for routing across pages-->
+    <!-- Navigation links to the application's main pages -->
     <header id="top">
         <img src="assets/smartphone-svgrepo-com.svg" class="header-icon header-icon-left">
         <h1>Cellphone Inventory Manager</h1>
@@ -18,24 +18,26 @@
             <a href="add-inventory.html">Add Inventory</a>
             <a href="manage-inventory.html" class="active">Manage Inventory</a>
         </nav>
-        <img src="assets/search-svgrepo-com.svg" class="header-icon header-icon-right">
     </header>
 
-
-    <!-- Display inventory table, with functionality to manage inventory accordingly -->
+    <!-- Inventory table containing edit and delete controls -->
     <main>
         <h2>Manage Inventory</h2>
         <p>Select an existing phone to manage in inventory.</p>
+
+        <!-- Inventory status displays loading or update messages. -->
         <p id="inventory-status" role="status">Loading inventory...</p>
+
+        <!-- Inventory table populated dynamically by inventory.js -->
         <div class="table-container">
-            <table id="inventory-table" data-allow-edit="true">
+            <table id="inventory-table" data-allow-edit="true" data-load-inventory="true">
                 <thead>
                     <tr>
-                        <th scope="col">Brand</th>
-                        <th scope="col">Model</th>
-                        <th scope="col">Storage</th>
-                        <th scope="col">Color</th>
-                        <th scope="col">Price</th>
+                        <th scope="col" aria-sort="none"><button type="button" class="sort-button" data-sort="brand">Brand <span class="sort-indicator" aria-hidden="true">&#8597;</span></button></th>
+                        <th scope="col" aria-sort="none"><button type="button" class="sort-button" data-sort="model">Model <span class="sort-indicator" aria-hidden="true">&#8597;</span></button></th>
+                        <th scope="col" aria-sort="none"><button type="button" class="sort-button" data-sort="storage">Storage <span class="sort-indicator" aria-hidden="true">&#8597;</span></button></th>
+                        <th scope="col" aria-sort="none"><button type="button" class="sort-button" data-sort="color">Color <span class="sort-indicator" aria-hidden="true">&#8597;</span></button></th>
+                        <th scope="col" aria-sort="none"><button type="button" class="sort-button" data-sort="price">Price <span class="sort-indicator" aria-hidden="true">&#8597;</span></button></th>
                         <th scope="col">Edit</th>
                         <th scope="col">Delete</th>
                     </tr>
@@ -45,28 +47,41 @@
         </div>
     </main>
 
-    <!-- Edit phone popup to change phone attributes-->
+    <!-- Edit Phone confirmation dialog -->
     <dialog id="edit-confirmation">
         <h2>Edit phone</h2>
+
+        <!-- Edit status displays validation or submission errors. -->
         <p id="edit-phone-status" class="form-status" role="alert"></p>
+
+        <!-- Edit Phone form containing the five phone attributes -->
         <form id="edit-phone-form" novalidate>
             <div class="edit-phone-fields">
+                <!-- Brand text field -->
                 <div class="filter-group">
                     <label for="edit-brand">Brand</label>
                     <input type="text" id="edit-brand" name="brand" required>
                 </div>
+
+                <!-- Model text field -->
                 <div class="filter-group">
                     <label for="edit-model">Model</label>
                     <input type="text" id="edit-model" name="model" required>
                 </div>
+
+                <!-- Storage text field -->
                 <div class="filter-group">
                     <label for="edit-storage">Storage</label>
                     <input type="text" id="edit-storage" name="storage" required>
                 </div>
+
+                <!-- Color text field -->
                 <div class="filter-group">
                     <label for="edit-color">Color</label>
                     <input type="text" id="edit-color" name="color" required>
                 </div>
+
+                <!-- Price field with a dollar sign prefix -->
                 <div class="filter-group">
                     <label for="edit-price">Price</label>
                     <div class="currency-input">
@@ -76,6 +91,8 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Edit dialog action buttons -->
             <div class="confirmation-actions">
                 <button type="button" id="cancel-edit" value="cancel">Cancel</button>
                 <button type="submit" id="save-edit">Save</button>
@@ -83,7 +100,7 @@
         </form>
     </dialog>
 
-    <!-- Delete confirmation pop-up when a delete is attempted -->
+    <!-- Confirmation dialog for deleting a phone -->
     <dialog id="delete-confirmation">
         <h2 id="delete-confirmation-title">Confirm deletion</h2>
         <p id="delete-confirmation-message">Are you sure you want to delete this phone?</p>

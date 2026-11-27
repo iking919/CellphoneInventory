@@ -65,25 +65,19 @@ class InventoryParserTest {
         assertEquals(2, phones.size());
 
         // Ensure that the valid phones before and after the failures are both present, in their original file order.
-        assertEquals(List.of("Google", "Samsung"),
-                phones.stream().map(Phone::getBrand).toList());
+        assertEquals("Google", phones.get(0).getBrand());
+        assertEquals("Samsung", phones.get(1).getBrand());
     }
 
-    // rejectsAnEmptyInventoryFile tests that a file without any rows is treated as an inventory loading error.
+    // parsesAnEmptyInventoryFileAsNoPhones tests that an empty inventory is a valid empty list.
     @Test
-    void rejectsAnEmptyInventoryFile() throws IOException {
+    void parsesAnEmptyInventoryFileAsNoPhones() throws IOException {
 
         // Initialize an empty dataset to attempt to load.
         Path inventory = tempDir.resolve("empty.txt");
         Files.createFile(inventory);
 
-        // Attempt to parse the empty file, ensuring an illegal argument exception is thrown.
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
-                () -> InventoryParser.parseInventory(inventory.toString()));
-
-        // Ensure the exception clearly identifies the reason the inventory could not be loaded.
-        assertTrue(exception.getMessage().contains("file is empty"));
+        assertTrue(InventoryParser.parseInventory(inventory.toString()).isEmpty());
     }
 
     // propagatesFileReadErrors tests that file system errors are passed to the caller instead of being silently ignored.

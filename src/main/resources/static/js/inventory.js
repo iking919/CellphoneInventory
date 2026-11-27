@@ -1,28 +1,29 @@
 /*
-    inventory.js contains logic to handle and properly display phone inventory.
-    This includes validating phone objects, formatting prices, and displaying a 
-    formal table. 
-
-    Right now it uses hardcoded mock json data but will be updated.
+    inventory.js contains shared logic for loading and displaying phone inventory.
+    It validates phone objects, formats table values, and provides column sorting.
 */
 
-
-// Change this to the Spring Boot endpoint when it is ready.
-const inventoryUrl = "mock/phones.json";
-
-// Establish entry for phone table and inventory status text.
+// Store references to the inventory table and its status element.
 const inventoryTable = document.querySelector("#inventory-table");
 const inventoryBody = inventoryTable.querySelector("tbody");
 const inventoryStatus = document.querySelector("#inventory-status");
 
-// Use US currency in table.
+// Create formatters for phone prices and text sorting.
 const priceFormatter = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD"
 });
+const textCollator = new Intl.Collator(undefined, { numeric: true, sensitivity: "base" });
+const sortColumnIndexes = {
+    brand: 0,
+    model: 1,
+    storage: 2,
+    color: 3,
+    price: 4
+};
+let sortState = { field: null, direction: 1 };
 
-
-// isPhone function returns true if input phone is a valid phone with necessary fields.
+// isPhone method checks whether an inventory object has valid phone fields.
 function isPhone(phone) {
     return phone !== null
         && typeof phone === "object"
@@ -34,10 +35,57 @@ function isPhone(phone) {
         && Number.isFinite(phone.price);
 }
 
-// Display inventory takes json list of phones and displays them in table.
+// storageSortValue method converts storage text into a number for numeric sorting.
+function storageSortValue(storage) {
+    const match = storage.match(/^(\d+)\s*(GB|TB)$/i);
+    if (!match) {
+        return storage;
+    }
+
+    return Number(match[1]) * (match[2].toUpperCase() === "TB" ? 1000 : 1);
+}
+
+// sortInventoryRows method sorts the displayed inventory rows using the selected 
+// column and sort direction. It exits without changes if no column has been selected.
+function sortInventoryRows() {
+    if (!sortState.field) {
+        return;
+    }
+
+    // Sort table rows using the active column and direction.
+    const columnIndex = sortColumnIndexes[sortState.field];
+    const rows = Array.from(inventoryBody.rows);
+    rows.sort((firstRow, secondRow) => {
+        const firstValue = firstRow.cells[columnIndex].dataset.sortValue;
+        const secondValue = secondRow.cells[columnIndex].dataset.sortValue;
+        const comparison = sortState.field === "price" || sortState.field === "storage"
+            ? Number(firstValue) - Number(secondValue)
+            : textCollator.compare(firstValue, secondValue);
+        return comparison * sortState.direction;
+    });
+    inventoryBody.replaceChildren(...rows);
+}
+
+// updateSortIndicators method updates sorting icons and accessibility attributes.
+function updateSortIndicators() {
+    inventoryTable.querySelectorAll(".sort-button").forEach((button) => {
+        const active = button.dataset.sort === sortState.field;
+        const indicator = button.querySelector(".sort-indicator");
+        const heading = button.closest("th");
+
+        indicator.textContent = active
+            ? (sortState.direction === 1 ? "\u2191" : "\u2193")
+            : "\u2195";
+        heading.setAttribute(
+            "aria-sort",
+            active ? (sortState.direction === 1 ? "ascending" : "descending") : "none");
+    });
+}
+
+// displayInventory method creates table rows from a list of phone objects.
 function displayInventory(phones) {
-    
-    // For each phone create a table row with all 5 properties.
+
+    // Create a table row containing all five phone properties.
     const rows = phones.map((phone, index) => {
         const row = document.createElement("tr");
         const values = [
@@ -47,19 +95,26 @@ function displayInventory(phones) {
             phone.color,
             priceFormatter.format(phone.price)
         ];
+        const sortValues = [
+            phone.brand,
+            phone.model,
+            storageSortValue(phone.storage),
+            phone.color,
+            phone.price
+        ];
 
-        // For each phone value create a corresponding table data cell.
-        values.forEach((value) => {
+        // Create a table data cell for each displayed phone value.
+        values.forEach((value, valueIndex) => {
             const cell = document.createElement("td");
             cell.textContent = value;
+            cell.dataset.sortValue = String(sortValues[valueIndex]);
             row.appendChild(cell);
         });
-        
 
-        // Display edit and delete buttons on the manage inventory page
-        if (inventoryTable.dataset.allowEdit=== "true") {
+        // Add edit and delete buttons when the table is in manage mode.
+        if (inventoryTable.dataset.allowEdit === "true") {
 
-            // Create edit button corresponding for each phone
+            // Create an edit button containing the selected phone's values.
             const editCell = document.createElement("td");
             const editButton = document.createElement("button");
             editButton.type = "button";
@@ -76,19 +131,20 @@ function displayInventory(phones) {
             editCell.appendChild(editButton);
             row.appendChild(editCell);
 
-            // Create delete button corresponding for each phone
+            // Create a delete button containing the selected phone's values.
             const deleteCell = document.createElement("td");
             const deleteButton = document.createElement("button");
             deleteButton.type = "button";
             deleteButton.className = "delete-button";
             deleteButton.textContent = "Delete";
 
-            // Include phone attributes to confirm selected phone deletion popup
+            // Store displayed deletion values for the confirmation popup.
             deleteButton.dataset.brand = phone.brand;
             deleteButton.dataset.model = phone.model;
             deleteButton.dataset.storage = phone.storage;
             deleteButton.dataset.color = phone.color;
-            deleteButton.dataset.price = priceFormatter.format(phone.price);
+            deleteButton.dataset.price = String(phone.price);
+            deleteButton.dataset.displayPrice = priceFormatter.format(phone.price);
             deleteCell.appendChild(deleteButton);
             row.appendChild(deleteCell);
         }
@@ -96,39 +152,73 @@ function displayInventory(phones) {
         return row;
     });
 
-    // Replace the previous inventory body section with the updated table.
+    // Replace the previous table rows and reapply the active sort.
     inventoryBody.replaceChildren(...rows);
+    sortInventoryRows();
+    updateSortIndicators();
 }
 
-// Fetch the inventory json and load into list of phones 
+window.displayInventory = displayInventory;
+
+// inventoryTable click handler changes or reverses the active sort column.
+inventoryTable.addEventListener("click", (event) => {
+    if (!(event.target instanceof Element)) {
+        return;
+    }
+
+    const sortButton = event.target.closest(".sort-button");
+    if (!sortButton || !inventoryTable.contains(sortButton)) {
+        return;
+    }
+
+    const field = sortButton.dataset.sort;
+    if (!Object.prototype.hasOwnProperty.call(sortColumnIndexes, field)) {
+        return;
+    }
+
+    if (sortState.field === field) {
+        sortState.direction *= -1;
+    } else {
+        sortState = { field, direction: 1 };
+    }
+
+    sortInventoryRows();
+    updateSortIndicators();
+});
+
+// loadInventory method fetches phone inventory from the API and displays it in the table.
 async function loadInventory() {
-    
-    // Try block attempts to fetch the inventory json, ensure all entries are phones,
-    // and display inventory table accordingly.
     try {
-        
-        // Throw error if fetch request fails.
-        const response = await fetch(inventoryUrl);
+
+        // Throw an error when the inventory request fails.
+        const response = await fetch("/api/phones");
         if (!response.ok) {
             throw new Error(`Inventory request failed with status ${response.status}.`);
         }
 
-        // Throw error if inventory data is not an array of valid phones.
+        // Validate the inventory response before displaying it.
         const phones = await response.json();
         if (!Array.isArray(phones) || !phones.every(isPhone)) {
             throw new Error("Inventory data must be an array of valid phone records.");
         }
 
-        // Display phone inventory, and provide inventory loaded text.
+        // Display the phones and update the inventory status.
         displayInventory(phones);
         inventoryStatus.textContent = `${phones.length} phones loaded.`;
+        return true;
 
-    // Write any errors to content and return warning text.
     } catch (error) {
-        inventoryStatus.textContent = "Could not load inventory. Check mock/phones.json and use a local web server.";
+
+        // Display an error and stop loading when the inventory request fails.
+        inventoryStatus.textContent = "Could not load inventory from the server.";
         console.error("Inventory load failed:", error);
+        return false;
     }
 }
 
-// Call load inventory function to run through all logic.
-loadInventory();
+window.loadInventory = loadInventory;
+
+// Load inventory automatically when the table requests it.
+if (inventoryTable && inventoryTable.dataset.loadInventory === "true") {
+    loadInventory();
+}

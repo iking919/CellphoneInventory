@@ -53,19 +53,18 @@ class MainIntegrationTest {
         assertTrue(result.contains("ERROR: Could not read the inventory file:"));
     }
 
-    // reportsInvalidInventoryErrors tests Main's response to an empty inventory file.
+    // reportsWhenInventoryIsEmpty tests Main's response to an empty inventory file.
     @Test
-    void reportsInvalidInventoryErrors() throws Exception {
+    void reportsWhenInventoryIsEmpty() throws Exception {
 
         // Initialize an existing empty file.
         Path emptyInventory = tempDir.resolve("empty.txt");
         Files.createFile(emptyInventory);
 
-        // Run Main and ensure the invalid-inventory error is outputted.
+        // Run Main and ensure it reports that no phones are available.
         String result = captureMainOutput(emptyInventory);
 
-        assertTrue(result.contains("ERROR: Could not load the inventory file:"));
-        assertTrue(result.contains("file is empty"));
+        assertTrue(result.contains("No valid phones found in the inventory file."));
     }
 
     // reportsWhenNoValidPhonesRemain tests the startup message when parsing skips every row.

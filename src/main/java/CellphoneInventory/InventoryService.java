@@ -361,19 +361,19 @@ public class InventoryService {
 
         // If the filter list contains price, sort by price ascending, then brand,model, storage and color alphabetically.
         if(containsPriceFilter(filters)) {
-            phones.sort(java.util.Comparator.comparing(Phone::getPrice)
-                .thenComparing(Phone::getBrand)
-                .thenComparing(Phone::getModel)
-                .thenComparing(Phone::getStorage)
-                .thenComparing(Phone::getColor));
+            phones.sort(java.util.Comparator.comparing((Phone phone) -> phone.getPrice())
+                .thenComparing(phone -> phone.getBrand())
+                .thenComparing((Phone phone) -> phone.getModel())
+                    .thenComparing((Phone phone) -> phone.getStorage())
+                .thenComparing(phone -> phone.getColor()));
 
         // Otherwise, results are sorted alphabetically by brand, color, model, and storage, with price used as the final tie-breaker. 
         } else {
-            phones.sort(java.util.Comparator.comparing(Phone::getBrand)
-                .thenComparing(Phone::getColor)
-                .thenComparing(Phone::getModel)
-                .thenComparing(Phone::getStorage)
-                .thenComparing(Phone::getPrice));
+            phones.sort(java.util.Comparator.comparing((Phone phone) -> phone.getBrand())
+                .thenComparing(phone -> phone.getColor())
+                .thenComparing(phone -> phone.getModel())
+                .thenComparing(phone -> phone.getStorage())
+                .thenComparing(phone -> phone.getPrice()));
         }
 
         // Return sorted phones.

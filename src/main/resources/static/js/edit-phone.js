@@ -1,43 +1,45 @@
-/* 
-    edit-phone.js contains logic to provide edits to existing inventory. This includes
-    an edit button in manage inventory page with corresponding field editing in a popup.
-    
-    Spring boot is needed to properly connect backend logic.
+/*
+    edit-phone.js contains logic for updating phones in the existing inventory.
+    It identifies the selected phone, validates the edit form, and sends a
+    PUT request to the Spring Boot API.
 */
 
-// Establish entry points for edit button and popup.
+(() => {
+
+// Store references to the edit dialog and its form and status elements.
 const editDialog = document.querySelector("#edit-confirmation");
 const editForm = document.querySelector("#edit-phone-form");
 const editStatus = document.querySelector("#edit-phone-status");
 const cancelEditButton = document.querySelector("#cancel-edit");
+const saveEditButton = document.querySelector("#save-edit");
+const inventoryStatusMessage = document.querySelector("#inventory-status");
 
-// Set initial selected phone to null .
 let selectedPhone = null;
 
-// Handle edit button clicks.
+// document click handler identifies the edit button and opens the confirmation dialog.
 document.addEventListener("click", (event) => {
 
-    // Locate clicked edit button and ensure it's valid.
+    // Ensure the clicked target is a valid HTML element.
     if (!(event.target instanceof Element)) {
         return;
     }
 
+    // Ignore clicks that were not made on an edit button.
     const editButton = event.target.closest(".edit-button");
     if (!editButton) {
         return;
     }
 
-    // Obtain attributes of selected phone that may be editted.
+    // Build the selected phone object from the edit button's data attributes.
     selectedPhone = {
-        index: editButton.dataset.phoneIndex,
         brand: editButton.dataset.brand,
         model: editButton.dataset.model,
         storage: editButton.dataset.storage,
         color: editButton.dataset.color,
-        price: editButton.dataset.price
+        price: Number(editButton.dataset.price)
     };
 
-    // Add phone attributes to edit popup.
+    // Populate the edit form with the selected phone's current values.
     editForm.elements.brand.value = selectedPhone.brand;
     editForm.elements.model.value = selectedPhone.model;
     editForm.elements.storage.value = selectedPhone.storage;
@@ -45,18 +47,16 @@ document.addEventListener("click", (event) => {
     editForm.elements.price.value = selectedPhone.price;
     editStatus.textContent = "";
     editStatus.classList.remove("error");
-    
-    // Show edit popup
+
+    // Open the edit confirmation dialog.
     editDialog.showModal();
 });
 
-// Handle edit form submission.
-editForm.addEventListener("submit", (event) => {
-    
-    // Prevent browser default form submission and page reload
+// editForm submit handler validates and sends the updated phone to the inventory API.
+editForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    // Ensure that all fields are filled and valid.
+    // Check that every required field is non-empty and valid.
     const requiredFields = Array.from(editForm.querySelectorAll("[required]"));
     let formIsValid = true;
     requiredFields.forEach((field) => {
@@ -67,14 +67,14 @@ editForm.addEventListener("submit", (event) => {
         }
     });
 
-    // Display error if any fields aren't valid.
+    // Display a warning and stop the update when the form is invalid.
     if (!formIsValid) {
         editStatus.textContent = "Please fill in all fields with valid values.";
         editStatus.classList.add("error");
         return;
     }
 
-    // Obtain new, editted phone values.
+    // Build an updated phone object using the values entered in the form.
     const updatedPhone = {
         brand: editForm.elements.brand.value.trim(),
         model: editForm.elements.model.value.trim(),
@@ -83,14 +83,48 @@ editForm.addEventListener("submit", (event) => {
         price: Number(editForm.elements.price.value)
     };
 
-    // TODO: Add springboot logic to update phones accordingly.
-    console.log("Updated phone:", selectedPhone.index, updatedPhone);
-    editStatus.textContent = "Phone update is not connected to the server yet.";
+    // Disable the save button and display a saving status while the request runs.
+    saveEditButton.disabled = true;
+    editStatus.textContent = "Saving changes...";
     editStatus.classList.remove("error");
+
+    try {
+        // Send the original and updated phones to the update endpoint.
+        const response = await fetch("/api/phones", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                original: selectedPhone,
+                updated: updatedPhone
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error(`Update request failed with status ${response.status}: ${await response.text()}`);
+        }
+
+        // Close the dialog and refresh the inventory display.
+        editDialog.close();
+        selectedPhone = null;
+        const inventoryReloaded = await window.loadInventory();
+        inventoryStatusMessage.textContent = inventoryReloaded
+            ? "Phone updated."
+            : "Phone updated, but the inventory display could not be refreshed.";
+    } catch (error) {
+        
+        // Display an error when the update request fails.
+        editStatus.textContent = "Could not update phone. Check the browser console for details.";
+        editStatus.classList.add("error");
+        console.error("Phone update failed:", error);
+    } finally {
+        saveEditButton.disabled = false;
+    }
 });
 
-
-// Close the popup when edit is cancelled.
+// cancelEditButton click handler closes the confirmation dialog.
 cancelEditButton.addEventListener("click", () => {
     editDialog.close();
 });
+})();

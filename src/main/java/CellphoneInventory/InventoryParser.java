@@ -20,9 +20,9 @@ public class InventoryParser {
         List<Phone> phones = new ArrayList<>();
         List<String> lines = Files.readAllLines(filePath);
 
-        // Check if the file is empty and throw an exception if it is.
+        // Return an empty list when the inventory file contains no records.
         if (lines.isEmpty()) {
-            throw emptyFile(filePath, "file is empty");
+            return phones;
         }
 
         // Iterate through each line in the file and parse it into a Phone object.
@@ -73,11 +73,6 @@ public class InventoryParser {
 
         // Return the list of valid Phone objects, after inventory has been parsed and validated.
         return phones;
-    }
-
-    // Helper methods to create IllegalArgumentException instances with detailed error messages.
-    private static IllegalArgumentException emptyFile(Path filePath, String message) {
-        return new IllegalArgumentException(filePath + ": " + message);
     }
 
     // Helper method to create an IllegalArgumentException for invalid rows with line number and message.

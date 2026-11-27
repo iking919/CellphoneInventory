@@ -14,29 +14,28 @@
         <img src="assets/smartphone-svgrepo-com.svg" class="header-icon header-icon-left">
         <h1>Cellphone Inventory Manager</h1>
 
-        <!-- Nav bar for routing across pages-->
+        <!-- Navigation links to the application's main pages -->
         <nav>
             <a href="index.html" class="active">Full Inventory</a>
             <a href="inventory-search.html">Inventory Search</a>
             <a href="add-inventory.html">Add Inventory</a>
             <a href="manage-inventory.html">Manage Inventory</a>
         </nav>
-        <img src="assets/search-svgrepo-com.svg" class="header-icon header-icon-right">
     </header>
 
-    <!-- Display ordered inventory list -->
+    <!-- Inventory list populated dynamically by inventory.js -->
     <main>
         <h2>Inventory List</h2>
         <p id="inventory-status" role="status">Loading inventory...</p>
         <div class="table-container">
-            <table id="inventory-table">
+            <table id="inventory-table" data-load-inventory="true">
                 <thead>
                     <tr>
-                        <th scope="col">Brand</th>
-                        <th scope="col">Model</th>
-                        <th scope="col">Storage</th>
-                        <th scope="col">Color</th>
-                        <th scope="col">Price</th>
+                        <th scope="col" aria-sort="none"><button type="button" class="sort-button" data-sort="brand">Brand <span class="sort-indicator" aria-hidden="true">&#8597;</span></button></th>
+                        <th scope="col" aria-sort="none"><button type="button" class="sort-button" data-sort="model">Model <span class="sort-indicator" aria-hidden="true">&#8597;</span></button></th>
+                        <th scope="col" aria-sort="none"><button type="button" class="sort-button" data-sort="storage">Storage <span class="sort-indicator" aria-hidden="true">&#8597;</span></button></th>
+                        <th scope="col" aria-sort="none"><button type="button" class="sort-button" data-sort="color">Color <span class="sort-indicator" aria-hidden="true">&#8597;</span></button></th>
+                        <th scope="col" aria-sort="none"><button type="button" class="sort-button" data-sort="price">Price <span class="sort-indicator" aria-hidden="true">&#8597;</span></button></th>
                     </tr>
                 </thead>
                 <tbody></tbody>

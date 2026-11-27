@@ -19,7 +19,6 @@ header {
         "left title right"
         "nav nav nav";
     align-items: center;
-    gap: 16px;
     border-bottom: 1px solid #333333;
 }
 
@@ -34,12 +33,7 @@ header {
 
 .header-icon-left {
     grid-area: left;
-    justify-self: center;
-}
-
-.header-icon-right {
-    grid-area: right;
-    justify-self: center;
+    justify-self: end;
 }
 
 /* Page title */
@@ -84,6 +78,7 @@ main {
     padding: 40px;
 }
 
+/* Section headings */
 main h2 {
     font-size: 28px;
 }
@@ -101,6 +96,11 @@ main h2 {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: 20px;
+}
+
+#search-form[hidden],
+#search-results[hidden] {
+    display: none;
 }
 
 /* Individual filter containers */
@@ -180,6 +180,35 @@ main h2 {
     background-color: #dddddd;
 }
 
+/* Clear filters action */
+#clear-filters-button {
+    margin-top: 0;
+    padding: 10px 18px;
+    background-color: #444444;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+/* Search results heading and controls */
+.search-results-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.search-results-header h3 {
+    margin: 0;
+}
+
+/* Clear filters hover state */
+#clear-filters-button:hover {
+    background-color: #666666;
+}
+
 /* Search form status and Add Inventory field validation */
 #add-phone-form input.invalid {
     border-color: #ff5555;
@@ -187,14 +216,10 @@ main h2 {
     outline-offset: 1px;
 }
 
-.form-status {
-    min-height: 1.2em;
-}
 
 .form-status.error {
     color: #ff7777;
 }
-
 
 /* Add Inventory page */
 
@@ -213,18 +238,22 @@ main h2 {
     color: #cccccc;
 }
 
+/* Scrollable inventory table container */
 .table-container {
-    overflow-x: auto;
+    max-height: 65vh;
+    overflow: auto;
     background-color: #1e1e1e;
     border-radius: 8px;
 }
 
+/* Inventory table dimensions and collapsed borders */
 #inventory-table {
     width: 100%;
     min-width: 600px;
     border-collapse: collapse;
 }
 
+/* Inventory table cell spacing and borders */
 #inventory-table th,
 #inventory-table td {
     padding: 12px 16px;
@@ -232,10 +261,40 @@ main h2 {
     text-align: left;
 }
 
+/* Sticky inventory table headers */
 #inventory-table th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
     background-color: #2b2b2b;
 }
 
+/* Table sorting controls */
+.sort-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0;
+    color: inherit;
+    background: transparent;
+    border: 0;
+    font: inherit;
+    cursor: pointer;
+}
+
+/* Sorting button hover and keyboard focus states */
+.sort-button:hover,
+.sort-button:focus-visible {
+    text-decoration: underline;
+}
+
+/* Sorting direction indicator */
+.sort-indicator {
+    color: #bbbbbb;
+    font-size: 0.8em;
+}
+
+/* Keep the final inventory table column left-aligned */
 #inventory-table th:last-child,
 #inventory-table td:last-child {
     text-align: left;
@@ -258,14 +317,17 @@ main h2 {
     background-color: #444444;
 }
 
+/* Edit button hover state */
 .edit-button:hover {
     background-color: #666666;
 }
 
+/* Delete button default state */
 .delete-button {
     background-color: #8f1d1d;
 }
 
+/* Delete button hover state */
 .delete-button:hover {
     background-color: #b3261e;
 }
@@ -282,12 +344,14 @@ main h2 {
     border-radius: 8px;
 }
 
+/* Dark overlay behind confirmation dialogs */
 #delete-confirmation::backdrop,
 #add-confirmation::backdrop,
 #edit-confirmation::backdrop {
     background-color: rgba(0, 0, 0, 0.7);
 }
 
+/* Confirmation dialog titles */
 #delete-confirmation h2,
 #add-confirmation h2,
 #edit-confirmation h2 {
@@ -295,6 +359,7 @@ main h2 {
     font-size: 22px;
 }
 
+/* Edit phone fields layout */
 .edit-phone-fields {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -302,16 +367,19 @@ main h2 {
     margin: 16px 0;
 }
 
+/* Remove default spacing from edit form groups */
 .edit-phone-fields .filter-group {
     margin: 0;
 }
 
+/* Confirmation dialog action row */
 .confirmation-actions {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
 }
 
+/* Shared confirmation action button style */
 .confirmation-actions button {
     padding: 8px 14px;
     color: white;
@@ -321,11 +389,17 @@ main h2 {
     cursor: pointer;
 }
 
+/* Cancel action styling */
 .confirmation-actions button[value="cancel"] {
     background-color: #444444;
 }
 
-#delete-confirmation button[value="confirm"],
+/* Confirm styling for add dialog */
 #add-confirmation button[value="confirm"] {
+    background-color: #28A745;
+}
+
+/* Confirm styling for delete dialog */
+#delete-confirmation button[value="confirm"] {
     background-color: #8f1d1d;
 }
